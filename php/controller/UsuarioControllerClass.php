@@ -102,7 +102,9 @@ class UsuarioController {
                  return false;
             }
          }catch(Exception $e){
-            show_error($e->getMessage() . ' --- ' . $e->getTraceAsString());
+             $this->indicadorError = true;
+             $this->mensajeError = "Ya existe un usuario asociado al rut, favor verifíque";
+             return false;
         }
       
     }
@@ -110,6 +112,7 @@ class UsuarioController {
     private function actualizarUsuario() {  
     try{   
         $usuario = $this->daoUsuario->buscarPorId($_POST["id"]);
+       
         if(!$usuario) {
             $this->indicadorError = true;
             $this->mensajeError = "El usuario al que desea actualizar los datos no existe!";
@@ -133,7 +136,7 @@ class UsuarioController {
         }
         
         if(isset($_POST["fecha_nacimiento"])) { 
-            $usuario->setFechaNacimiento($_POST["fecha_nacimiento"]);        
+            $usuario->setFechaNacimiento("1900-01-01");        
         }
         
         if($_POST["sexo"] == "M") {
@@ -154,13 +157,13 @@ class UsuarioController {
         }
 
         // si el formulario viene con una clave, entonce se actualiza
-        if(isset($_POST["clave"]) && !empty($_POST["clave"])) {
-            $usuario->setClave($_POST["clave"]);
+        if(isset($_POST["claveEditar"]) && !empty($_POST["claveEditar"])) {
+            $usuario->setClave($_POST["claveEditar"]);
         } else {
             // de lo contrario se setea nula para que se mantenga la existente            
             $usuario->setClave(null);
         }
-        
+         echo "111";
         if($this->daoUsuario->actualizar($usuario)) {
             $this->indicadorExito = true;
             $this->mensajeExito = "Los datos del cliente han sido actualizados exitosamente";

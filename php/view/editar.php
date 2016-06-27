@@ -37,16 +37,12 @@
 //                     return false;
 //                 }
                
-                 if($('#clave').val()!=$('#clave2').val()){
+                 if($('#claveEditar').val()!=$('#claveEditar2').val()){
                     alert('Las contraseñas no coinciden.');
                     return false;
                  }
-                 if($('#clave2').val()!=$('#clave').val()){
-                    alert('Las contraseñas no coinciden..');
-                    return false;
-                 }
                     $claveOculta = $('#claveOculta').val();
-                    return false;
+                    return true;
                  
                 
                 // enlazar una funcion a ejecutar cuando la peticion ajax se termine
@@ -232,12 +228,12 @@
                             <div class="col-sm-3"></div>
                             <div class="col-sm-3">
                                 <label for="clave">Contraseña</label>
-                                <input class="form-control" type="password" name="clave" value="" /> 
+                                <input id="claveEditar" class="form-control" type="password" name="claveEditar" value="" /> 
                                 <input id="claveOculta" class="form-control" type="hidden" name="claveOculta" value="<?= $usuario->getClave() ?>"/>
                             </div>
                             <div class="col-sm-3">
                                 <label for="clave2">Repetir Contraseña</label>
-                                <input id="clave2" class="form-control" type="password" name="clave2" value="" />
+                                <input id="claveEditar2" class="form-control" type="password" name="claveEditar2" value="" />
                             </div>
                             <div class="col-sm-3"></div>
                         </div>
