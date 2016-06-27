@@ -118,6 +118,9 @@ class UsuarioController {
             $this->mensajeError = "El usuario al que desea actualizar los datos no existe!";
             return false;
         }
+        if(isset($_POST["id"])) {
+            $usuario->setRut($_POST["id"]);
+        }
         
         if(isset($_POST["nombre"])) {
             $usuario->setNombre($_POST["nombre"]);
@@ -158,12 +161,11 @@ class UsuarioController {
 
         // si el formulario viene con una clave, entonce se actualiza
         if(isset($_POST["claveEditar"]) && !empty($_POST["claveEditar"])) {
-            $usuario->setClave($_POST["claveEditar"]);
-        } else {
-            // de lo contrario se setea nula para que se mantenga la existente            
-            $usuario->setClave(null);
+            $usuario->setClave($this->encriptarClave($_POST["claveEditar"]));
+        } else {        
+            $usuario->setClave($_POST["claveOculta"]);
         }
-         echo "111";
+
         if($this->daoUsuario->actualizar($usuario)) {
             $this->indicadorExito = true;
             $this->mensajeExito = "Los datos del cliente han sido actualizados exitosamente";
@@ -173,6 +175,8 @@ class UsuarioController {
         }
         
     }catch(Exception $e){
+            $this->indicadorError = true;
+            $this->mensajeError = "No se pudo actualizar los datos del cliente";
             show_error($e->getMessage() . ' --- ' . $e->getTraceAsString());
         }
     }
@@ -216,6 +220,21 @@ class UsuarioController {
     function getMensajeError() {
         return $this->mensajeError;
     }
+    private function encriptarClave($clave) {
+        $version = phpversion();
+        $numero = str_replace(".", "", $version);
+        $numeroVersion = substr($numero, 0, 3);
+        $claveEncriptada = "";
+
+        if($numeroVersion < 550) {             
+            $claveEncriptada = sha1($clave);
+        } else {
+            $claveEncriptada = password_hash($clave,PASSWORD_DEFAULT);
+        }
+        
+        return $claveEncriptada;
+    }
+    
 
 
 }

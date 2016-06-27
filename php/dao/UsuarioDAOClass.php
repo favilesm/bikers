@@ -58,18 +58,18 @@ class UsuarioDAO {
     }
     
     
-    function actualizar($usuario) {
+    function actualizar($usuario)  {
            $query = "UPDATE usuario SET "
-                 . "nombre = '".$usuario->getNombre()."',"
-                 . "apellido_paterno = '".$usuario->getApellidoPaterno()."',"
-                 . "apellido_materno = '".$usuario->getApellidoMaterno()."',"
-                 . "email = '".$usuario->getEmail()."',"
-                   
-                 . "fecha_nacimiento = '".$usuario->getFechaNacimiento()."',"
-                 . "clave = '".$this->encriptarClave($usuario->getClave())."',"
-                 . "sexo = '".$usuario->getSexo()."',"
-                 . "comuna = '".$usuario->getCodComuna()."',"
-                 . "perfil = '".$usuario->getPerfil()."' WHERE `usuario`.`rut` = ".$usuario.getRut();
+                        . "nombre = '".$usuario->getNombre()."',"
+                        . "apellido_paterno = '".$usuario->getApellidoPaterno()."',"
+                        . "apellido_materno = '".$usuario->getApellidoMaterno()."',"
+                        . "email = '".$usuario->getEmail()."',"
+                        . "fecha_nacimiento = '".$usuario->getFechaNacimiento()."',"
+                        . "clave = '".$usuario->getClave()."',"
+                        . "sexo = '".$usuario->getSexo()."',"
+                        . "comuna = '".$usuario->getCodComuna()."',"
+                        . "perfil = '".$usuario->getPerfil()."' "
+                  . "WHERE rut = '".$usuario->getRut()."'";
            
          $resultado = $this->conexion->getConexion()->query($query);
         return $resultado;

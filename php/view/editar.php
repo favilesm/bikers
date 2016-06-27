@@ -33,10 +33,7 @@
     <script>
         jQuery(document).ready(function() {
              jQuery("input[type='submit']").click(function(event){
-//                 if(isset($('#clave').val()) && isset($('#clave2').val())){
-//                     return false;
-//                 }
-               
+              
                  if($('#claveEditar').val()!=$('#claveEditar2').val()){
                     alert('Las contraseñas no coinciden.');
                     return false;
@@ -44,29 +41,11 @@
                     $claveOculta = $('#claveOculta').val();
                     return true;
                  
-                
-                // enlazar una funcion a ejecutar cuando la peticion ajax se termine
-//                ajaxRequest.done(function(jsonResponse){
-//                    var respuesta = JSON.parse(jsonResponse);
-//
-//                    if(!respuesta.autenticado) {
-//                        jQuery("#login-error-box b").text(respuesta.motivo);
-//                        jQuery("#login-error-box").removeClass("hidden");                        
-//                    } else {
-//                        jQuery("#login-error-box").addClass("hidden");
-//                        jQuery("#login-success-box").removeClass("hidden");
-//                        jQuery("#login-box .modal-footer").addClass("hidden");
-//                        jQuery("body").fadeOut(2000, function(){                            
-//                        window.location.reload();
-//                        });                     
-//                    }
-//                });   
             });
             
             //logica para carga de datos en combos dependientes
             jQuery.getJSON("ajax.php?json=regiones",{},function(jsonResponse){
                 jQuery.each(jsonResponse, function(clave, valor){                        
-                    //console.log("<option value=\""+valor.codigo+"\">"+valor.nombre+"</option>\n");
                     jQuery("<option>").attr("value",valor.codigo).text(valor.nombre).appendTo("select[name='region']");
                 })
             });
